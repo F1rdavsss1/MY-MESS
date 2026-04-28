@@ -134,7 +134,6 @@ export class PostService {
 
   // Delete post
   static async deletePost(postId: number, userId: number) {
-    // Check if post exists and belongs to user
     const existingPost = await prisma.post.findUnique({
       where: { id: postId },
     });

@@ -65,7 +65,7 @@ router.post(
   }
 );
 
-// Logout user (client-side token removal)
+// Logout user
 router.post("/logout", async function (req: Request, res: Response) {
   try {
     return res.status(200).json({ 
@@ -76,7 +76,7 @@ router.post("/logout", async function (req: Request, res: Response) {
   }
 });
 
-// Get current user (protected route)
+// Get current user
 router.get("/me", authMiddleware, async function (req: AuthRequest, res: Response) {
   try {
     if (!req.userId) {

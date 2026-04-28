@@ -8,7 +8,6 @@ const api = axios.create({
   withCredentials: true,
 });
 
-// Attach JWT token to every request automatically
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) {
@@ -17,7 +16,6 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Handle 401 globally — clear storage and redirect to login
 api.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -30,7 +28,7 @@ api.interceptors.response.use(
   }
 );
 
-// ─── Auth ────────────────────────────────────────────────────────────────────
+// Auth 
 export const authAPI = {
   register: (data) => api.post('/auth/register', data),
   login: (data) => api.post('/auth/login', data),
@@ -38,7 +36,7 @@ export const authAPI = {
   me: () => api.get('/auth/me'),
 };
 
-// ─── Posts ───────────────────────────────────────────────────────────────────
+// Posts 
 export const postsAPI = {
   getAll: () => api.get('/posts'),
   getById: (id) => api.get(`/posts/${id}`),
@@ -48,7 +46,7 @@ export const postsAPI = {
   delete: (id) => api.delete(`/posts/${id}`),
 };
 
-// ─── Messages ────────────────────────────────────────────────────────────────
+// Messages 
 export const messageAPI = {
   getAll: () => api.get('/messages'),
   getWithUser: (userId) => api.get(`/messages/${userId}`),

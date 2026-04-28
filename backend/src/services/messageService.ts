@@ -46,7 +46,7 @@ export class MessageService {
     });
   }
 
-  // Получить список уникальных собеседников (для сайдбара)
+  // Получить список уникальных собеседников
   // Возвращает последнее сообщение с каждым уникальным пользователем
   static async getConversations(userId: number) {
     // Все сообщения где участвует пользователь
@@ -58,7 +58,7 @@ export class MessageService {
       orderBy: { createdAt: "desc" },
     });
 
-    // Дедупликация: оставляем только последнее сообщение с каждым собеседником
+    // оставляем только последнее сообщение с каждым собеседником
     const seen = new Set<number>();
     const conversations: typeof messages = [];
 

@@ -43,7 +43,7 @@ function Avatar({ username, size = 46, showBadge = false }) {
   );
 }
 
-// Тестовый чат (показывается когда нет реальных чатов)
+// Тестовый чат 
 const DEMO_CHAT = {
   id: '__demo__',
   senderId: 0,
@@ -78,7 +78,7 @@ export default function Messenger() {
   const typingTimerRef = useRef(null);
   const inputRef = useRef(null);
 
-  // ── WebSocket ──────────────────────────────────────────────────────────────
+  // WebSocket 
   useEffect(() => {
     if (!token) return;
     wsService.connect(token);
@@ -141,12 +141,12 @@ export default function Messenger() {
     return () => { u1(); u2(); u3(); u4(); u5(); u6(); u7(); wsService.disconnect(); };
   }, [token]);
 
-  // ── Scroll to bottom ───────────────────────────────────────────────────────
+  // Scroll to bottom 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // ── Load conversations ─────────────────────────────────────────────────────
+  // Load conversations 
   const loadConversations = async () => {
     try {
       const { data } = await messageAPI.getAll();
@@ -158,7 +158,7 @@ export default function Messenger() {
 
   useEffect(() => { loadConversations(); }, []);
 
-  // ── Load messages when chat selected ──────────────────────────────────────
+  // Load messages when chat selected 
   useEffect(() => {
     if (!selectedId || selectedId === '__demo__') {
       if (selectedId === '__demo__') setMessages(DEMO_MESSAGES);
@@ -171,7 +171,7 @@ export default function Messenger() {
       .finally(() => setLoading(false));
   }, [selectedId]);
 
-  // ── Helpers ────────────────────────────────────────────────────────────────
+  //  Helpers 
   const getOtherUser = (conv) => {
     if (!conv || conv.isDemo) return { id: 0, username: 'Support Bot' };
     return conv.senderId === user.id ? conv.recipient : conv.sender;
@@ -186,7 +186,7 @@ export default function Messenger() {
 
   const selectedUser = getOtherUser(selectedConv);
 
-  // ── Send / Edit ────────────────────────────────────────────────────────────
+  // Send / Edit 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const text = newMessage.trim();
