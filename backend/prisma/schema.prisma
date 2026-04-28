@@ -30,7 +30,7 @@ model Post {
   title    String
   content  String?
   authorId Int
-  author   User    @relation(fields: [authorId], references: [id])
+  author   User    @relation(fields: [authorId], references: [id], onDelete: Cascade)
 }
 
 model Message {
@@ -41,6 +41,6 @@ model Message {
   isEdited    Boolean  @default(false)
   senderId    Int
   recipientId Int
-  sender      User     @relation("SentMessages",     fields: [senderId],    references: [id])
-  recipient   User     @relation("ReceivedMessages", fields: [recipientId], references: [id])
+  sender      User     @relation("SentMessages",     fields: [senderId],    references: [id], onDelete: Cascade)
+  recipient   User     @relation("ReceivedMessages", fields: [recipientId], references: [id], onDelete: Cascade)
 }

@@ -21,7 +21,7 @@ app.get("/", (req, res) => {
   res.status(200).json({ status: "ok" });
 });
 
-// Create HTTP server (needed for WebSocket)
+// HTTP server (needed for WebSocket)
 const server = http.createServer(app);
 
 // Initialize WebSocket manager

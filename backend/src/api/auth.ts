@@ -92,4 +92,36 @@ router.get("/me", authMiddleware, async function (req: AuthRequest, res: Respons
   }
 });
 
+// Get all users
+router.get("/", async function (req: Request, res: Response) {
+  try {
+    const users = await AuthService.getAllUsers();
+    return res.status(200).json({ users });
+  } catch (e: any) {
+    console.error("Get users error:", e);
+    return res.status(500).json({ error: "Failed to fetch users" });
+  }
+});
+
+// Delete user
+router.delete("/:id", async function (req: Request, res: Response) {
+  try {
+    const userId = Number(req.params.id);
+    
+    if (isNaN(userId)) {
+      return res.status(400).json({ error: "Invalid user ID" });
+    }
+
+    const deletedUser = await AuthService.deleteUser(userId);
+
+    return res.status(200).json({
+      message: "User deleted successfully",
+      user: deletedUser
+    });
+  } catch (e: any) {
+    console.error("Delete user error:", e);
+    return res.status(500).json({ error: e.message || "Failed to delete user" });
+  }
+});
+
 export default router;

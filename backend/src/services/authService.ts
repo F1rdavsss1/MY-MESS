@@ -121,4 +121,43 @@ export class AuthService {
 
     return user;
   }
+
+  static async deleteUser(userId: number) {
+    // First check if user exists
+    const user = await prisma.user.findUnique({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      throw new Error("User not found");
+    }
+
+    // Delete user (cascade will handle related records based on schema)
+    const deletedUser = await prisma.user.delete({
+      where: { id: userId },
+      select: {
+        id: true,
+        username: true,
+        email: true,
+      },
+    });
+
+    return deletedUser;
+  }
+
+  static async getAllUsers() {
+    const users = await prisma.user.findMany({
+      select: {
+        id: true,
+        username: true,
+        email: true,
+        createAt: true,
+      },
+      orderBy: {
+        createAt: "desc",
+      },
+    });
+
+    return users;
+  }
 }
